@@ -118,7 +118,7 @@ if uploaded_image:
         # Send the image and prompt to OpenAI API
         st.session_state["generated_response"] = send_to_openai_api(base64_image)
 
-        #st.write(st.session_state.get("generated_response"))
+        st.write(st.session_state.get("generated_response"))
 
 
 
