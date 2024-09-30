@@ -1,6 +1,4 @@
 streamlit==1.38.0
-spotipy
-openai
-pillow
-base64
-requests
+spotipy==2.24.0
+openai==1.50.2
+pillow==10.4.0

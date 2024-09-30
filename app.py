@@ -118,7 +118,7 @@ if uploaded_image:
         # Send the image and prompt to OpenAI API
         st.session_state["generated_response"] = send_to_openai_api(base64_image)
 
-        st.write(st.session_state.get("generated_response"))
+        #st.write(st.session_state.get("generated_response"))
 
 
 
@@ -129,7 +129,14 @@ st.write("Adjust the Spotify query parameters:")
 #audio_features = response['choices'][0]['message']['content']["audio_features"] if response else None
 #genres = response['choices'][0]['message']['content']["genres"] if response else None
 
-audio_features = st.session_state.get("generated_response")["audio_features"]
+if not  st.session_state.get("generated_response"):
+    audio_features = response["audio_features"]
+    genres = response["genres"]
+else:
+    audio_features = st.session_state.get("generated_response")["audio_features"]
+    genres = st.session_state.get("generated_response")["genres"]
+
+
 
 # Input sliders  adjusting Spotify query parameters
 danceability = st.slider("Danceability (0.0 - 1.0)", min_value=0.0, max_value=1.0, value= audio_features["danceability"])
@@ -179,8 +186,9 @@ if st.button("Generate Music Recommendations"):
     st.write("Generated Query Parameters:", query_params)
     
     # Fetch recommendations from Spotify
-    (print(st.session_state.get("generated_response")["genres"]))
-    results = sp.recommendations(seed_genres=st.session_state.get("generated_response")["genres"], **query_params)
+    #(print(st.session_state.get("generated_response")["genres"]))
+    
+    results = sp.recommendations(seed_genres=genres, **query_params)
     
     # Sort tracks by popularity (descending order)
     tracks = results['tracks']
